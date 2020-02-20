@@ -2,6 +2,10 @@ node 'default' {
   notify { 'Hello depuis puppet':}
 }
 node 'front' {
-  muppet{'kermit': myname => 'kermit'}
-  muppet{'peggy': myname => 'peggy'}
+  $ip = split($facts['networking']['ip'],'[.]')
+  if $ip[3] % 2 == false {
+    muppet{'kermit': myname => 'kermit'}
+  } else {
+    muppet{'peggy': myname => 'peggy'}
+  }
 }
