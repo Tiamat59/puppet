@@ -1,8 +1,7 @@
 node 'default' {
   notify { 'Hello depuis puppet':}
 }
-
-
 node 'front' {
-  include muppet
+  muppet{'kermit': myname => 'kermit'}
+  muppet{'peggy': myname => 'peggy'}
 }

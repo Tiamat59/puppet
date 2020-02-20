@@ -1,32 +1,33 @@
-# Class: muppet
+# Define: muppet
 #
 #
-class muppet {
+define muppet (String $myname) {
 
-  group { 'kermit':
-    ensure => 'present'
+  group{ "Create Group $myname":
+      ensure => 'present',
+      name   => $myname,
   }
-
-  user { 'kermit':
-    ensure  => 'present',
-    require => Group['kermit'],
-    gid     => 'kermit',
-    home    => '/home/kermit',
-    shell   => '/bin/bash',
-    before  => File['/home/kermit'],
+  user{ "Create User $myname":
+      ensure  => 'present',
+      name    => $myname,
+      require => Group["Create Group $myname"],
+      gid     => $myname,
+      home    => "/home/$myname",
+      shell   => '/bin/bash',
+      before  => File["Create user directory /home/$myname"],
   }
-
-  file { '/home/kermit':
-    ensure => 'directory',
-    before => File['/home/kermit/.profile'],
-    owner  => 'kermit',
-    group  => 'kermit',
+  file{ "Create user directory /home/$myname":
+      ensure => directory,
+      name   => "/home/$myname",
+      owner  => $myname,
+      group  => $myname,
+      before => File["Create .profile $myname"],
   }
-
-  file { '/home/kermit/.profile':
-    ensure => 'file',
-    source => 'puppet:///modules/muppet/.profile',
-    owner  => 'kermit',
-    group  => 'kermit',
+  file{"Create .profile $myname":
+      ensure  => 'file',
+      name    => "/home/$myname/.profile",
+      content => epp('muppet/.profile.epp', { 'myname' => "$myname" }),
+      owner   => $myname,
+      group   => $myname,
   }
 }
