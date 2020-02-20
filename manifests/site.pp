@@ -1,5 +1,5 @@
 node 'default' {
-  notify ("Hello depuis puppet")
+  notify { 'Hello depuis puppet':}
 }
 
 node 'front' {

@@ -24,10 +24,10 @@ class muppet {
   }
 
   file { '/home/kermit/.profile':
-    ensure  => 'file',
-    content => 'echo "Hello from Kermit"',
-    owner   => 'kermit',
-    group   => 'kermit',
+    ensure => 'file',
+    source => 'puppet:///modules/muppet/.profile',
+    owner  => 'kermit',
+    group  => 'kermit',
   }
 
 }
