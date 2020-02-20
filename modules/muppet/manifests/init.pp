@@ -29,5 +29,4 @@ class muppet {
     owner  => 'kermit',
     group  => 'kermit',
   }
-
 }
